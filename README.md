@@ -23,7 +23,6 @@ Things you may want to cover:
 
 * ...
 
-# Pictweet DB設計
 ## usersテーブル
 |Column|Type|Options|
 |------|----|-------|
@@ -31,48 +30,37 @@ Things you may want to cover:
 |password|string|null: false|
 |nickname|string|null: false|
 ### Association
-- has_many :tweets
-- has_many :posts
-- has_many :comments
+- has_many :messages
+- has_many :groups
+- has_many :users_tags,  through: :groups_tags
 
 
-## postsテーブル
+## messagesテーブル
 |Column|Type|Options|
 |------|----|-------|
-|title|text|null: false|
 |text|text|null: false|
 |user_id|integer|null: false, foreign_key: true|
 
 ### Association
-- belongs_to :user
-- has_many :comments
-- has_many :posts_tags
-- has_many  :tags,  through:  :posts_tags
+- has_many :users
+- has_many :groups
+- has_many :messages
 
-
-## tagsテーブル
+## groupsテーブル
 |Column|Type|Options|
 |------|----|-------|
-|text|text|null: false|
+|text|string|null: false|
 ### Association
-- has_many :posts_tags
-- has_many  :posts,  through:  :posts_tags
+- has_many :users
+- has_many :messages
+- has_many :groups_tags,  through: :users_tags
 
-## posts_tagsテーブル
+## users_grouosテーブル
 |Column|Type|Options|
 |------|----|-------|
-|post_id|integer|null: false, foreign_key: true|
-|tag_id|integer|null: false, foreign_key: true|
-### Association
-- belongs_to :post
-- belongs_to :tag
-
-## commentsテーブル
-|Column|Type|Options|
-|------|----|-------|
-|text|text|null: false|
 |user_id|integer|null: false, foreign_key: true|
 |group_id|integer|null: false, foreign_key: true|
 ### Association
-- belongs_to :post
-- belongs_to :user
+- has_many :users
+- has_many :messages
+- has_many :groups
